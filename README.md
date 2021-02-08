@@ -182,6 +182,10 @@ Table of contents
       * [Print Spark configuration properties](#print-spark-configuration-properties)
       * [Set Spark configuration properties](#set-spark-configuration-properties)
       * [Increase Spark driver/executor heap space](#increase-spark-driverexecutor-heap-space)
+   * [More Transforms](#more-transforms)
+      * [Concat two columns](#concat-two-columns)
+      * [Add an index column to Dataframe](#add-an-index-column-to-dataframe)
+       
 <!--te-->
     
 
