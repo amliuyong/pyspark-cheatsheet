@@ -4440,3 +4440,31 @@ Increase Spark driver/executor heap space
 # https://spark.apache.org/docs/latest/cluster-overview.html
 # And good luck!
 ```
+
+
+
+More transforms
+=======================
+
+Concat two columns
+-----------------------------------------
+```python
+import pyspark.sql.functions as F
+
+df = spark.range(10).toDF('number').select(F.col('number').cast('string').alias('astr')).select(F.concat(F.lit("a"), F.col('astr')).alias('col'))
+
+df.show()
+```
+
+
+Add an index column to Dataframe
+-----------------------------------------
+
+```python
+cols = df.columns
+df = df.rdd.zipWithIndex().map(lambda row: (row[1],) + tuple(row[0])).toDF(["index"] + cols)
+```
+
+
+
+
