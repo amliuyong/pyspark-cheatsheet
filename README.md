@@ -4469,6 +4469,13 @@ cols = df.columns
 df = df.rdd.zipWithIndex().map(lambda row: (row[1],) + tuple(row[0])).toDF(["index"] + cols)
 ```
 
+```python
+from pyspark.sql import Window
+from pyspark.sql.functions import row_number, monotonically_increasing_id
+
+df_index = df.withColumn("index", row_number().over(Window.orderBy(monotonically_increasing_id())))
+```
+
 
 
 
