@@ -4476,6 +4476,18 @@ from pyspark.sql.functions import row_number, monotonically_increasing_id
 df_index = df.withColumn("index", row_number().over(Window.orderBy(monotonically_increasing_id())))
 ```
 
+Read text file with a string delimeter '_!_'
+-----------------------------------------
+
+```python
+from pyspark.sql.functions import col, size, regexp_replace, trim
+
+df_input = spark.read.text(input_file).selectExpr("split(value, '_!_') as row").where(size(col("row")) > 4).selectExpr("row[0] as id", "row[3] as item", "row[4] as keywords")
+ 
+df_rep = df_input.select(col("id"), regexp_replace(col("item"), r'[&`><=@ω\{\}^#$/\]\[*【】Ⅴ；%+——「」｜…….:。\s？.：·、！《》!,，_~)）（(?“”"\\-]', '').alias('item_clean'))
+
+```
+
 
 
 
