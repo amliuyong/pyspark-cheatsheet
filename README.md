@@ -185,6 +185,7 @@ Table of contents
    * [More Transforms](#more-transforms)
       * [Concat two columns](#concat-two-columns)
       * [Add an index column to Dataframe](#add-an-index-column-to-dataframe)
+      * [Read text file with a string delimeter](#read-text-file-with-a-string-delimeter-)
        
 <!--te-->
     
