@@ -4488,7 +4488,7 @@ df_input = spark.read.text(input_file).selectExpr("split(value, '_!_') as row").
 df_rep = df_input.select(col("id"), regexp_replace(col("item"), r'[&`><=@ω\{\}^#$/\]\[*【】Ⅴ；%+——「」｜…….:。\s？.：·、！《》!,，_~)）（(?“”"\\-]', '').alias('item_clean'))
 
 ```
-```
+```python
 from pyspark.sql import Row
 
 lines = spark.read.text("data/mllib/als/sample_movielens_ratings.txt").rdd
