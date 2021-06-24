@@ -4512,18 +4512,20 @@ df=spark.createDataFrame([('1234567','123 Main St','10SjtT','idk@gmail.com','eco
 
 df.select("cust_id","address",to_json(struct("store_id","category","sales_channel","email")).alias("metadata")).show(10,False)
 ```
-
+```
 #result
 +-------+-----------+----------------------------------------------------------------------------------------+
 |cust_id|address    |metadata                                                                                |
 +-------+-----------+----------------------------------------------------------------------------------------+
 |1234567|123 Main St|{"store_id":"10SjtT","category":"direct","sales_channel":"ecom","email":"idk@gmail.com"}|
 +-------+-----------+----------------------------------------------------------------------------------------+
+```
 
 ```python
 ll=['store_id','email','sales_channel','category']
 
 df.withColumn("metadata", to_json(struct([x for x in ll]))).drop(*ll).show()
+```
 ```
 #result
 +-------+-----------+----------------------------------------------------------------------------------------+
@@ -4531,4 +4533,4 @@ df.withColumn("metadata", to_json(struct([x for x in ll]))).drop(*ll).show()
 +-------+-----------+----------------------------------------------------------------------------------------+
 |1234567|123 Main St|{"store_id":"10SjtT","email":"idk@gmail.com","sales_channel":"ecom","category":"direct"}|
 +-------+-----------+----------------------------------------------------------------------------------------+
-
+```
