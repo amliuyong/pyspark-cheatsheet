@@ -187,7 +187,7 @@ Table of contents
       * [Add an index column to Dataframe](#add-an-index-column-to-dataframe)
       * [Read text file with a string delimeter](#read-text-file-with-a-string-delimeter-)
       * [Merge multiple columns into a json column](#merge-multiple-columns-into-a-json-column)
-      * [How to concate two dataframes](#how-to-concat-two-dataframes)
+      * [How to concate two dataframes](#how-to-concate-two-dataframes)
        
 <!--te-->
     
