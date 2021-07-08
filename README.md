@@ -187,7 +187,7 @@ Table of contents
       * [Add an index column to Dataframe](#add-an-index-column-to-dataframe)
       * [Read text file with a string delimeter](#read-text-file-with-a-string-delimeter-)
       * [Merge multiple columns into a json column](#merge-multiple-columns-into-a-json-column)
-      * [How to concat two dataframes](#how-to-concat-two-dataframes)
+      * [How to concate two dataframes](#how-to-concat-two-dataframes)
        
 <!--te-->
     
@@ -4536,7 +4536,7 @@ df.withColumn("metadata", to_json(struct([x for x in ll]))).drop(*ll).show()
 +-------+-----------+----------------------------------------------------------------------------------------+
 ```
 
-How to concat two dataframes
+How to concate two dataframes
 -----------------------------------------
 ```python
 import pyspark.sql.functions as f
