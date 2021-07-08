@@ -187,7 +187,7 @@ Table of contents
       * [Add an index column to Dataframe](#add-an-index-column-to-dataframe)
       * [Read text file with a string delimeter](#read-text-file-with-a-string-delimeter-)
       * [Merge multiple columns into a json column](#merge-multiple-columns-into-a-json-column)
-      * [How to concat two array / list columns of different spark dataframes](#how-to-concat-two-array-list-columns-of-different-spark-dataframes)
+      * [How to concat two dataframes](#how-to-concat-two-dataframes)
        
 <!--te-->
     
@@ -4536,10 +4536,9 @@ df.withColumn("metadata", to_json(struct([x for x in ll]))).drop(*ll).show()
 +-------+-----------+----------------------------------------------------------------------------------------+
 ```
 
-
- How to concat two array / list columns of different spark dataframes
- -----------------------------------------
-
+How to concat two dataframes
+-----------------------------------------
+```python
 import pyspark.sql.functions as f
 from pyspark.sql.functions import col, concat
 
@@ -4555,3 +4554,47 @@ df_renamed = df_inner_join.toDF(*new_names) # Issues with column renames otherwi
 df_result = df_renamed.select(col("index1"), concat(col("value1"), col("value2"))) 
 new_names_final = ['index', 'value']
 df_result_final = df_result.toDF(*new_names_final)
+
+```
+
+```
++---------+
+|    value|
++---------+
+|[0, 1, 2]|
+|[1, 2, 3]|
+|[2, 3, 4]|
+|[3, 4, 5]|
+|[4, 5, 6]|
+|[5, 6, 7]|
+|[6, 7, 8]|
++---------+
+
++--------+
+|   value|
++--------+
+|[10, 20]|
+|[11, 21]|
+|[12, 22]|
+|[13, 23]|
+|[14, 24]|
+|[15, 25]|
+|[16, 26]|
++--------+
+
+
+```
+Data out:
+```
++-----+-----------------+
+|index|            value|
++-----+-----------------+
+|    0|[0, 1, 2, 10, 20]|
+|    6|[6, 7, 8, 16, 26]|
+|    5|[5, 6, 7, 15, 25]|
+|    1|[1, 2, 3, 11, 21]|
+|    3|[3, 4, 5, 13, 23]|
+|    2|[2, 3, 4, 12, 22]|
+|    4|[4, 5, 6, 14, 24]|
++-----+-----------------+
+```
