@@ -187,6 +187,7 @@ Table of contents
       * [Add an index column to Dataframe](#add-an-index-column-to-dataframe)
       * [Read text file with a string delimeter](#read-text-file-with-a-string-delimeter-)
       * [Merge multiple columns into a json column](#merge-multiple-columns-into-a-json-column)
+      * [How to concat two array / list columns of different spark dataframes](#how-to-concat-two-array-list-columns-of-different-spark-dataframes)
        
 <!--te-->
     
@@ -4534,3 +4535,23 @@ df.withColumn("metadata", to_json(struct([x for x in ll]))).drop(*ll).show()
 |1234567|123 Main St|{"store_id":"10SjtT","email":"idk@gmail.com","sales_channel":"ecom","category":"direct"}|
 +-------+-----------+----------------------------------------------------------------------------------------+
 ```
+
+
+ How to concat two array / list columns of different spark dataframes
+ -----------------------------------------
+
+import pyspark.sql.functions as f
+from pyspark.sql.functions import col, concat
+
+df1 = spark.createDataFrame([ list([[x,x+1,x+2]]) for x in range(7)], ['value'])
+df2 = spark.createDataFrame([ list([[x+10,x+20]]) for x in range(7)], ['value'])
+dfA = df1.rdd.map(lambda r: r.value).zipWithIndex().toDF(['value', 'index'])
+dfB = df2.rdd.map(lambda r: r.value).zipWithIndex().toDF(['value', 'index'])
+
+df_inner_join = dfA.join(dfB, dfA.index == dfB.index)
+new_names = ['value1', 'index1', 'value2', 'index2']
+df_renamed = df_inner_join.toDF(*new_names) # Issues with column renames otherwise!
+
+df_result = df_renamed.select(col("index1"), concat(col("value1"), col("value2"))) 
+new_names_final = ['index', 'value']
+df_result_final = df_result.toDF(*new_names_final)
